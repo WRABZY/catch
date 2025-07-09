@@ -32,19 +32,21 @@ const (
 	SHADOW_KING
 )
 
-const NOWHERE = -1
-
 const ZERO = EMPTY
 
+// Game field parameters
 const (
+	NOWHERE    = -1
 	FIELD_SIDE = DAMAGED_BISHOP_1
 	FIELD_SIZE = FIELD_SIDE * FIELD_SIDE
+	LAST_INDEX = FIELD_SIDE - 1
 )
 
 const (
 	PLAYER_HP_MAX = DAMAGED_BISHOP_1
 )
 
+// Directions
 const (
 	NORTH        = PAW_NORTH
 	EAST         = PAW_EAST

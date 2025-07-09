@@ -48,6 +48,10 @@ func TestNew(t *testing.T) {
 	if game.y != NOWHERE {
 		t.Errorf(`game.y = %d, but must be %d`, game.y, NOWHERE)
 	}
+
+	if len(*game.enemiesXY) != ZERO {
+		t.Errorf(`len(*game.enemiesXY) = %d, but must be 0`, len(*game.enemiesXY))
+	}
 }
 
 func TestInsertPlayer(t *testing.T) {
@@ -60,37 +64,37 @@ func TestInsertPlayer(t *testing.T) {
 
 	id := "TestInsertPlayer"
 	cases := []testCase{
-		testCase{
+		{
 			game:        New(&id),
 			x:           0,
 			y:           0,
 			expectation: true,
 		},
-		testCase{
+		{
 			game:        New(&id),
 			x:           FIELD_SIDE - 1,
 			y:           FIELD_SIDE - 1,
 			expectation: true,
 		},
-		testCase{
+		{
 			game:        New(&id),
 			x:           FIELD_SIDE,
 			y:           FIELD_SIDE - 1,
 			expectation: false,
 		},
-		testCase{
+		{
 			game:        New(&id),
 			x:           0,
 			y:           -5,
 			expectation: false,
 		},
-		testCase{
+		{
 			game:        New(&id),
 			x:           FIELD_SIDE + 1,
 			y:           1,
 			expectation: false,
 		},
-		testCase{
+		{
 			game:        New(&id),
 			x:           3,
 			y:           7,
