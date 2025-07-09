@@ -32,6 +32,8 @@ const (
 	SHADOW_KING
 )
 
+const NOWHERE = -1
+
 const ZERO = EMPTY
 
 const (
@@ -41,4 +43,12 @@ const (
 
 const (
 	PLAYER_HP_MAX = DAMAGED_BISHOP_1
+)
+
+const (
+	NORTH        = PAW_NORTH
+	EAST         = PAW_EAST
+	SOUTH        = PAW_SOUTH
+	WEST         = PAW_WEST
+	NO_DIRECTION = EMPTY
 )
