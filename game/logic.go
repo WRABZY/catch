@@ -53,13 +53,13 @@ func (g *Game) insertPlayer(x, y int8) (ok bool) {
 	return false
 }
 
-func (g *Game) insertPawNorth(x, y int8) (ok bool) {
+func (g *Game) insertPawnNorth(x, y int8) (ok bool) {
 	if x > NOWHERE &&
 		x < FIELD_SIDE &&
 		y == ZERO &&
 		(g.field[y][x] == EMPTY || g.field[y][x] > KING) {
 
-		g.field[y][x] = PAW_NORTH
+		g.field[y][x] = PAWN_NORTH
 		if _, ok := (*g.enemiesXY)[x]; !ok {
 			(*g.enemiesXY)[x] = make(map[int8]struct{})
 		}
@@ -70,13 +70,13 @@ func (g *Game) insertPawNorth(x, y int8) (ok bool) {
 	return false
 }
 
-func (g *Game) insertPawEast(x, y int8) (ok bool) {
+func (g *Game) insertPawnEast(x, y int8) (ok bool) {
 	if x == LAST_INDEX &&
 		y > NOWHERE &&
 		y < FIELD_SIDE &&
 		(g.field[y][x] == EMPTY || g.field[y][x] > KING) {
 
-		g.field[y][x] = PAW_EAST
+		g.field[y][x] = PAWN_EAST
 		if _, ok := (*g.enemiesXY)[x]; !ok {
 			(*g.enemiesXY)[x] = make(map[int8]struct{})
 		}
@@ -87,13 +87,13 @@ func (g *Game) insertPawEast(x, y int8) (ok bool) {
 	return false
 }
 
-func (g *Game) insertPawSouth(x, y int8) (ok bool) {
+func (g *Game) insertPawnSouth(x, y int8) (ok bool) {
 	if x > NOWHERE &&
 		x < FIELD_SIDE &&
 		y == LAST_INDEX &&
 		(g.field[y][x] == EMPTY || g.field[y][x] > KING) {
 
-		g.field[y][x] = PAW_SOUTH
+		g.field[y][x] = PAWN_SOUTH
 		if _, ok := (*g.enemiesXY)[x]; !ok {
 			(*g.enemiesXY)[x] = make(map[int8]struct{})
 		}
@@ -104,13 +104,13 @@ func (g *Game) insertPawSouth(x, y int8) (ok bool) {
 	return false
 }
 
-func (g *Game) insertPawWest(x, y int8) (ok bool) {
+func (g *Game) insertPawnWest(x, y int8) (ok bool) {
 	if x == ZERO &&
 		y > NOWHERE &&
 		y < FIELD_SIDE &&
 		(g.field[y][x] == EMPTY || g.field[y][x] > KING) {
 
-		g.field[y][x] = PAW_WEST
+		g.field[y][x] = PAWN_WEST
 		if _, ok := (*g.enemiesXY)[x]; !ok {
 			(*g.enemiesXY)[x] = make(map[int8]struct{})
 		}

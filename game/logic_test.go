@@ -135,3 +135,181 @@ func TestInsertPlayer(t *testing.T) {
 		}
 	}
 }
+
+func TestInsertPawns(t *testing.T) {
+	id := "TestInsertPawns"
+	game := New(&id)
+
+	var x int8 = -128
+	var y int8 = 0
+
+	if game.insertPawnNorth(x, y) {
+		t.Errorf(`North pawn was inserted into x = %d y = %d`, x, y)
+	}
+
+	x = 0
+	y = 127
+
+	if game.insertPawnNorth(x, y) {
+		t.Errorf(`North pawn was inserted into x = %d y = %d`, x, y)
+	}
+
+	for x, y = 0, 0; x < FIELD_SIDE; x++ {
+		if !game.insertPawnNorth(x, y) {
+			t.Errorf(`North pawn wasn't inserted into x = %d y = %d`, x, y)
+		}
+	}
+
+	if game.insertPawnNorth(x, y) {
+		t.Errorf(`North pawn was inserted into x = %d y = %d`, x, y)
+	}
+
+	x--
+	if game.insertPawnNorth(x, y) {
+		t.Errorf(`North pawn was inserted into x = %d y = %d, but there is already a north pawn`, x, y)
+	}
+
+	if game.insertPawnEast(x, y) {
+		t.Errorf(`East pawn was inserted into x = %d y = %d, but there is already a north pawn`, x, y)
+	}
+
+	for y++; y < FIELD_SIDE; y++ {
+		if !game.insertPawnEast(x, y) {
+			t.Errorf(`East pawn wasn't inserted into x = %d y = %d`, x, y)
+		}
+	}
+
+	if game.insertPawnEast(x, y) {
+		t.Errorf(`East pawn was inserted into x = %d y = %d`, x, y)
+	}
+
+	y--
+	if game.insertPawnEast(x, y) {
+		t.Errorf(`East pawn was inserted into x = %d y = %d, but there is already a east pawn`, x, y)
+	}
+
+	if game.insertPawnSouth(x, y) {
+		t.Errorf(`South pawn was inserted into x = %d y = %d, but there is already a east pawn`, x, y)
+	}
+
+	for x--; x > NOWHERE; x-- {
+		if !game.insertPawnSouth(x, y) {
+			t.Errorf(`South pawn wasn't inserted into x = %d y = %d`, x, y)
+		}
+	}
+
+	if game.insertPawnSouth(x, y) {
+		t.Errorf(`South pawn was inserted into x = %d y = %d`, x, y)
+	}
+
+	x++
+	if game.insertPawnSouth(x, y) {
+		t.Errorf(`South pawn was inserted into x = %d y = %d, but there is already a south pawn`, x, y)
+	}
+
+	if game.insertPawnWest(x, y) {
+		t.Errorf(`West pawn was inserted into x = %d y = %d, but there is already a south pawn`, x, y)
+	}
+
+	for y--; y > ZERO; y-- {
+		if !game.insertPawnWest(x, y) {
+			t.Errorf(`West pawn wasn't inserted into x = %d y = %d`, x, y)
+		}
+	}
+
+	if game.insertPawnWest(x, y) {
+		t.Errorf(`West pawn was inserted into x = %d y = %d, but there is already a west pawn`, x, y)
+	}
+
+	for x = ZERO; x < FIELD_SIDE; x++ {
+		for y = ZERO; y < FIELD_SIDE; y++ {
+			if game.insertPawnWest(x, y) {
+				if x == ZERO || y == ZERO || x == LAST_INDEX || y == LAST_INDEX {
+					t.Errorf(`Pawn was repeatedly inserted into x = %d y = %d`, x, y)
+				}
+				t.Errorf(`Pawn was inserted into x = %d y = %d`, x, y)
+			}
+		}
+	}
+
+	enemies := 0
+	for x, row := range *game.enemiesXY {
+		for y = range row {
+			enemies++
+			if x == ZERO || x == LAST_INDEX || y == ZERO || y == LAST_INDEX {
+				continue
+			}
+			t.Errorf(`In game.enemiesXY found pawn with x = %d, y = %d`, x, y)
+		}
+	}
+
+	mustBeEnemies := FIELD_SIDE*4 - 4
+	if enemies != mustBeEnemies {
+		t.Errorf(`Map game.enemiesXY contains %d items, but must be %d`, enemies, mustBeEnemies)
+	}
+
+	northPawns := 0
+	eastPawns := 0
+	southPawns := 0
+	westPawns := 0
+	for x = 0; x < FIELD_SIDE; x++ {
+		for y = 0; y < FIELD_SIDE; y++ {
+			switch game.field[y][x] {
+			case ZERO:
+				continue
+			case PAWN_NORTH:
+				northPawns++
+				if y != ZERO {
+					t.Errorf(`In game.field found north pawn with y = %d`, y)
+				}
+			case PAWN_EAST:
+				eastPawns++
+				if x != LAST_INDEX {
+					t.Errorf(`In game.field found east pawn with x = %d`, x)
+				}
+			case PAWN_SOUTH:
+				southPawns++
+				if y != LAST_INDEX {
+					t.Errorf(`In game.field found south pawn with y = %d`, y)
+				}
+			case PAWN_WEST:
+				westPawns++
+				if x != ZERO {
+					t.Errorf(`In game.field found west pawn with x = %d`, x)
+				}
+			}
+		}
+	}
+
+	pawns := northPawns + eastPawns + southPawns + westPawns
+	if pawns != enemies {
+		t.Errorf(`In game.field found %d pawns, in game.enemiesXY %d enemies`, pawns, enemies)
+	}
+
+	game = New(&id)
+	if !game.insertPawnEast(LAST_INDEX, CENTER) {
+		t.Errorf(`Can't insert east pawn into x = %d y = %d`, LAST_INDEX, CENTER)
+	}
+
+	if len(*game.enemiesXY) != 1 {
+		t.Errorf(`len(*game.enemiesXY) = %d after inserting 1 east pawn`, len(*game.enemiesXY))
+	}
+
+	game = New(&id)
+	if !game.insertPawnSouth(CENTER, LAST_INDEX) {
+		t.Errorf(`Can't insert south pawn into x = %d y = %d`, CENTER, LAST_INDEX)
+	}
+
+	if len(*game.enemiesXY) != 1 {
+		t.Errorf(`len(*game.enemiesXY) = %d after inserting 1 south pawn`, len(*game.enemiesXY))
+	}
+
+	game = New(&id)
+	if !game.insertPawnWest(ZERO, CENTER) {
+		t.Errorf(`Can't insert west pawn into x = %d y = %d`, ZERO, CENTER)
+	}
+
+	if len(*game.enemiesXY) != 1 {
+		t.Errorf(`len(*game.enemiesXY) = %d after inserting 1 west pawn`, len(*game.enemiesXY))
+	}
+}
