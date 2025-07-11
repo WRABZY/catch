@@ -2,7 +2,7 @@ package catch
 
 // Entity codes
 const (
-	EMPTY = iota
+	NOBODY = iota
 	PLAYER
 	PAWN_NORTH
 	PAWN_EAST
@@ -32,19 +32,13 @@ const (
 	SHADOW_KING
 )
 
-const ZERO = EMPTY
+const ZERO = NOBODY
 
 // Game field parameters
 const (
 	NOWHERE    = -1
-	FIELD_SIDE = DAMAGED_BISHOP_1
-	FIELD_SIZE = FIELD_SIDE * FIELD_SIDE
-	LAST_INDEX = FIELD_SIDE - 1
 	CENTER     = FIELD_SIDE / 2
-)
-
-const (
-	PLAYER_HP_MAX = DAMAGED_BISHOP_1
+	LAST_INDEX = FIELD_SIDE - 1
 )
 
 // Directions
@@ -53,5 +47,5 @@ const (
 	EAST         = PAWN_EAST
 	SOUTH        = PAWN_SOUTH
 	WEST         = PAWN_WEST
-	NO_DIRECTION = EMPTY
+	NO_DIRECTION = NOBODY
 )
