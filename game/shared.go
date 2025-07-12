@@ -2,50 +2,53 @@ package catch
 
 // Entity codes
 const (
-	NOBODY = iota
-	PLAYER
-	PAWN_NORTH
-	PAWN_EAST
-	PAWN_SOUTH
-	PAWN_WEST
-	DAMAGED_ROOK
-	ROOK
-	DAMAGED_BISHOP_2
-	DAMAGED_BISHOP_1
-	BISHOP
-	DAMAGED_KNIGHT_3
-	DAMAGED_KNIGHT_2
-	DAMAGED_KNIGHT_1
-	KNIGHT
-	DAMAGED_QUEEN_4
-	DAMAGED_QUEEN_3
-	DAMAGED_QUEEN_2
-	DAMAGED_QUEEN_1
-	QUEEN
-	KING
-	SHADOW_PLAYER
-	SHADOW_PAWN
-	SHADOW_ROOK
-	SHADOW_BISHOP
-	SHADOW_KNIGHT
-	SHADOW_QUEEN
-	SHADOW_KING
+	Nobody = iota
+	Player
+	PawnNorth
+	PawnEast
+	PawnSouth
+	PawnWest
+	DamagedRook
+	Rook
+	DamagedBishop2
+	DamagedBishop1
+	Bishop
+	DamagedKnight3
+	DamagedKnight2
+	DamagedKnight1
+	Knight
+	DamagedQueen4
+	DamagedQueen3
+	DamagedQueen2
+	DamagedQueen1
+	Queen
+	King
+	ShadowPlayer
+	ShadowPawn
+	ShadowRook
+	ShadowBishop
+	ShadowKnight
+	ShadowQueen
+	ShadowKing
 )
 
-const ZERO = NOBODY
+const Zero = Nobody
 
-// Game field parameters
+// Placing
 const (
-	NOWHERE    = -1
-	CENTER     = FIELD_SIDE / 2
-	LAST_INDEX = FIELD_SIDE - 1
+	FieldSide      = DamagedBishop1
+	FieldSize      = FieldSide * FieldSide
+	FieldPerimeter = 4 * (FieldSide - 1)
+	Nowhere        = -1
+	Center         = FieldSide / 2
+	LastIndex      = FieldSide - 1
+
+	DirectionsNumber = PawnSouth
+	North            = PawnNorth
+	East             = PawnEast
+	South            = PawnSouth
+	West             = PawnWest
+	NoDirection      = Nobody
 )
 
-// Directions
-const (
-	NORTH        = PAWN_NORTH
-	EAST         = PAWN_EAST
-	SOUTH        = PAWN_SOUTH
-	WEST         = PAWN_WEST
-	NO_DIRECTION = NOBODY
-)
+const HPMax = DamagedBishop1
